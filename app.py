@@ -218,7 +218,7 @@ def amis():
                 user2_id = cursor.fetchone()[0]
                 cursor.execute('SELECT * FROM friend_request WHERE user1_id = ? AND user2_id = ?', (str(session['id']), str(user2_id),))
                 fr = cursor.fetchone()
-                if fr is None and not is_friend(session['id'], str(user2_id)):
+                if fr is None and not is_friend(session['id'], str(user2_id), con):
                     cursor.execute('INSERT INTO friend_request VALUES (NULL, ?, ?)', (str(session['id']), str(user2_id,)))
                     con.commit()
                     msg = "Demande d'ami envoyée!"
@@ -280,4 +280,4 @@ def dislike_post():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
